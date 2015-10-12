@@ -165,12 +165,10 @@ static IMP originalImp;
     statusBar = [self.webView convertRect:statusBar fromView:nil];
     screen = [self.webView convertRect:screen fromView:nil];
 
-    // if the webview is below the status bar, offset and shrink its frame
-    if ([self settingForKey:@"StatusBarOverlaysWebView"] != nil && ![[self settingForKey:@"StatusBarOverlaysWebView"] boolValue]) {
-        CGRect full, remainder;
-        CGRectDivide(screen, &remainder, &full, statusBar.size.height, CGRectMinYEdge);
-        screen = full;
-    }
+    // Webview is below the status bar, offset and shrink its frame
+    CGRect full, remainder;
+    CGRectDivide(screen, &remainder, &full, statusBar.size.height, CGRectMinYEdge);
+    screen = full;
 
     // Get the intersection of the keyboard and screen and move the webview above it
     // Note: we check for _shrinkView at this point instead of the beginning of the method to handle
